@@ -52,5 +52,8 @@ jobs:
       - deploy:
           name: Deploy Master to Heroku
           command: |
-            git push https://heroku:$b404f82b-fbbc-4f8d-b5d4-487962d3bea5@git.heroku.com/$circleci-demo-python-flask-01
-.git master
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              git push heroku master
+              heroku run python manage.py deploy
+              heroku restart
+            fi
